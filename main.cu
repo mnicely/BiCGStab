@@ -1154,7 +1154,7 @@ int test_bicgstab( char *      matrix_filename,
     if ( base ) {
         CUSPARSE_CALL( cusparseSetMatIndexBase( descra_uli, CUSPARSE_INDEX_BASE_ONE ) );
     } else {
-        CUSPARSE_CALL( cusparseSetMatIndexBase( descra_uli, CUSPARSE_INDEX_BASE_ZERO ) );
+        // CUSPARSE_CALL( cusparseSetMatIndexBase( descra_uli, CUSPARSE_INDEX_BASE_ZERO ) );
     }
 
     CUSPARSE_CALL( cusparseDcsrilu02_bufferSize( cusparseHandle,
@@ -1181,16 +1181,16 @@ int test_bicgstab( char *      matrix_filename,
                                                dBuffer_ilu ) );
 
     // FIXME -- BUG?
-    // CUSPARSE_CALL( cusparseDcsrilu02( cusparseHandle,
-    //                                   CUSPARSE_OPERATION_NON_TRANSPOSE,
-    //                                   matrixM,
-    //                                   descra_uli,
-    //                                   devPtrMval,
-    //                                   devPtrArowsIndex,
-    //                                   devPtrAcolsIndex,
-    //                                   info_M,
-    //                                   CUSPARSE_SOLVE_POLICY_USE_LEVEL,
-    //                                   dBuffer_ilu ) );
+    CUSPARSE_CALL( cusparseDcsrilu02( cusparseHandle,
+                                      matrixM,
+                                      nnz,
+                                      descra_uli,
+                                      devPtrMval,
+                                      devPtrArowsIndex,
+                                      devPtrAcolsIndex,
+                                      info_M,
+                                      CUSPARSE_SOLVE_POLICY_USE_LEVEL,
+                                      dBuffer_ilu ) );
 
     // OLD
     // checkCudaErrors( cusparseDcsrilu0( cusparseHandle,
